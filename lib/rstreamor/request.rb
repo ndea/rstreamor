@@ -18,5 +18,9 @@ module Rstreamor
       ranges[1] ? ranges[1] : self.file.data.size
     end
 
+    def range_header?
+      self.request.headers['HTTP_RANGE'].present?
+    end
+
   end
 end
