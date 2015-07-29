@@ -9,10 +9,6 @@ module Rstreamor
       self.request.range_header? ? 206 : 200
     end
 
-    def content_type
-      self.request.file_content_type
-    end
-
     def content_length
       if self.request.range_header?
         ranges = self.request.ranges

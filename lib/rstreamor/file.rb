@@ -9,5 +9,9 @@ module Rstreamor
       self.file.data
     end
 
+    def content_type
+      self.file.content_type
+    end
+
   end
 end
