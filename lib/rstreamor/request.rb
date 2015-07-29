@@ -22,5 +22,9 @@ module Rstreamor
       self.request.headers['HTTP_RANGE'].present?
     end
 
+    def file_content_type
+      self.file.content_type
+    end
+
   end
 end
