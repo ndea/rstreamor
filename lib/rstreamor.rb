@@ -20,13 +20,11 @@ module Rstreamor
 
   def set_response_header(request_builder, response_builder)
     response.headers['Content-Type'] = request_builder.file_content_type
+    response.headers['Content-Length'] = response_builder.content_length
     if request_builder.range_header?
       response.headers['Accept-Ranges'] = 'bytes'
-      response.headers['Content-Length'] = (request_builder.upper_bound - request_builder.lower_bound + 1).to_s
-      response.headers['Content-Range'] = "bytes #{request_builder.lower_bound}-#{request_builder.upper_bound}/#{request_builder.file_size}"
       response.headers['Cache-Control'] = 'no-cache'
-    else
-      response.headers['Content-Length'] = request_builder.file_size
+      response.headers['Content-Range'] = response_builder.content_range
     end
   end
 
