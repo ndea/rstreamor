@@ -13,7 +13,7 @@ module Rstreamor
 
     def content_length
       if self.request.range_header?
-        (self.request.upper_bound - self.request.lower_bound + 1).to_s
+        (self.request.upper_bound - self.request.lower_bound).to_s
       else
         self.request.file.data.size
       end
