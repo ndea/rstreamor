@@ -13,5 +13,9 @@ module Rstreamor
       self.file.content_type
     end
 
+    def size
+      data.size
+    end
+
   end
 end

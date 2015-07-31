@@ -30,5 +30,9 @@ module Rstreamor
       self.file.data.byteslice(lower_bound, upper_bound)
     end
 
+    def file_size
+      self.file.size
+    end
+
   end
 end
