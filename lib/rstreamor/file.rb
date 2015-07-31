@@ -1,5 +1,6 @@
 module Rstreamor
   class File
+    attr_accessor :file
 
     def initialize(file)
       self.file = file

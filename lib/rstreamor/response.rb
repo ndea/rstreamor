@@ -1,6 +1,8 @@
 module Rstreamor
   class Response
 
+    attr_accessor :request
+
     def initialize(request)
       self.request = request
     end

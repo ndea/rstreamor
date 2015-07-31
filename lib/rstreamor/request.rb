@@ -1,5 +1,6 @@
 module Rstreamor
   class Request
+    attr_accessor :request, :file
 
     def initialize(request, file)
       self.request = request
