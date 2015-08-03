@@ -15,19 +15,22 @@ gem 'rstreamor', '~> 0.2.0'
 bundle install
 ```
 # Usage
-Given you have a controller with a streaming action (here it's the show  action) simply use following code:
+In combination with Carrierwave
+```ruby
+class Profile < ActiveRecord::Base
+    mount_uploader :image_file, ProfileImageUploader
+end
+```
 ```ruby
 class VideosController < ApplicationController
     include Rstreamor
     def show
-        stream @resource.file
+        stream @resource.image_file
     end
 end
 ```
-Please note that the file method of @resource is a mounted uploader of carrierwave.
-
 Rstreamor takes care of the rest. 
-If you dont use Carrierwave as a file make sure your file has the following methods:
+If you dont use Carrierwave as a file make sure your file method has the following methods defined:
 - #data
 - #content_type
 
