@@ -22,7 +22,7 @@ class Profile < ActiveRecord::Base
 end
 ```
 ```ruby
-class ImageController < ApplicationController
+class VideosController < ApplicationController
     include Rstreamor
     def show
         stream @resource.image_file
@@ -41,7 +41,42 @@ Byte serving is the process of sending only a portion of an HTTP/1.1 message fro
 Consider you have a large video or audio file on your server which needs to be served partially to your client. You don't want to send the whole file in one response (unless you want to download the file). Instead the client needs only partial content which he can view and request other partial content if needed. Rstreamor provides this byte serving mechanism defined in HTTP/1.1.
 
 ###### Example
-###### Limitations
+Example of the request - response flow
+Consider simple HTML5 video streaming.
+```html
+<video width="320" height="240" controls>
+  		<source src="http://..." type="video/mp4">
+		Your browser does not support the video tag.
+</video>
+```
+The first request fired by the client contains the following header
+```bash
+Range:bytes=0-
+```
+and requests the whole file from the server starting from 0 till end. The server then responds with the following headers
+```bash
+Accept-Ranges:bytes
+Cache-Control:no-cache
+Content-Disposition:inline
+Content-Length:6642801
+Content-Range:bytes 0-6642800/6642801
+Content-Transfer-Encoding:binary
+Content-Type:application/mp4
+```
+Now let's skip through our video and seek for a certain scene - the client now sends the following request header
+```bash 
+Range:bytes=3303604-
+```
+And the server responds with the following response headers
+```bash 
+Accept-Ranges:bytes
+Cache-Control:no-cache
+Content-Disposition:inline
+Content-Length:3339197
+Content-Range:bytes 3303604-6642800/6642801
+Content-Transfer-Encoding:binary
+Content-Type:application/mp4
+```
 # Contributing
 
 1. Fork it ( https://github.com/ndea/regressor/fork )
