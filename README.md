@@ -1,30 +1,36 @@
 # Rstreamor
-Development in progress...
+Stream your data using HTTP/1.1 range requests and partial responses.
 
 # Get Rstreamor
 ###### Directly from GitHub
 ```ruby
-gem 'regressor', git: 'https://github.com/ndea/rstreamor.git', branch: 'master'
+gem 'rstreamor', git: 'https://github.com/ndea/rstreamor.git', branch: 'master'
 ```
 ###### Rubygems
+```ruby
+gem 'rstreamor', '~> 0.2.0'
+```
 # Install
 ```ruby
 bundle install
 ```
 # Usage
-Given you have a controller with a streaming action (here it's the show  action) simply use following code:
+In combination with Carrierwave
+```ruby
+class Profile < ActiveRecord::Base
+    mount_uploader :image_file, ProfileImageUploader
+end
+```
 ```ruby
 class VideosController < ApplicationController
     include Rstreamor
     def show
-        stream @resource.file
+        stream @resource.image_file
     end
 end
 ```
-Please note that the file method of @resource is a mounted uploader of carrierwave.
-
 Rstreamor takes care of the rest. 
-If you dont use Carrierwave as a file make sure your file has the following methods:
+If you dont use Carrierwave as a file make sure your file method has the following methods defined:
 - #data
 - #content_type
 
@@ -35,7 +41,42 @@ Byte serving is the process of sending only a portion of an HTTP/1.1 message fro
 Consider you have a large video or audio file on your server which needs to be served partially to your client. You don't want to send the whole file in one response (unless you want to download the file). Instead the client needs only partial content which he can view and request other partial content if needed. Rstreamor provides this byte serving mechanism defined in HTTP/1.1.
 
 ###### Example
-###### Limitations
+Example of the request - response flow
+Consider simple HTML5 video streaming.
+```html
+<video width="320" height="240" controls>
+  		<source src="http://..." type="video/mp4">
+		Your browser does not support the video tag.
+</video>
+```
+The first request fired by the client contains the following header
+```bash
+Range:bytes=0-
+```
+and requests the whole file from the server starting from 0 till end. The server then responds with the following headers
+```bash
+Accept-Ranges:bytes
+Cache-Control:no-cache
+Content-Disposition:inline
+Content-Length:6642801
+Content-Range:bytes 0-6642800/6642801
+Content-Transfer-Encoding:binary
+Content-Type:application/mp4
+```
+Now let's skip through our video and seek for a certain scene - the client now sends the following request header
+```bash 
+Range:bytes=3303604-
+```
+And the server responds with the following response headers
+```bash 
+Accept-Ranges:bytes
+Cache-Control:no-cache
+Content-Disposition:inline
+Content-Length:3339197
+Content-Range:bytes 3303604-6642800/6642801
+Content-Transfer-Encoding:binary
+Content-Type:application/mp4
+```
 # Contributing
 
 1. Fork it ( https://github.com/ndea/regressor/fork )
