@@ -7,7 +7,11 @@ module Rstreamor
     end
 
     def data
-      self.file.data
+      if self.file.respond_to? :data
+        self.file.data
+      else
+        self.file.read
+      end
     end
 
     def content_type
