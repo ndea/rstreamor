@@ -4,26 +4,29 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'rstreamor/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "rstreamor"
-  spec.version       = Rstreamor::VERSION
-  spec.authors       = ["Erwin Schens"]
-  spec.email         = ["erwinschens@uni-koblenz.de"]
+  spec.name = 'rstreamor'
+  spec.version = Rstreamor::VERSION
+  spec.authors = ['Erwin Schens']
+  spec.email = ['erwinschens@uni-koblenz.de']
 
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com' to prevent pushes to rubygems.org, or delete to allow pushes to any server."
-  end
+  spec.summary = %q{Stream files using HTTP range requests.}
+  spec.description = %q{
+                        Rstreamor gives you the power to stream your files using the HTTP range requests defined in the HTTP/1.1.
+                        Range requests are an optional feature of HTTP,
+                        designed so that recipients not implementing this feature
+                        (or not supporting it for the target resource) can respond as if
+                        it is a normal GET request without impacting interoperability.
+                         Partial responses are indicated by a distinct status code to not be mistaken for full responses by caches that might not implement the feature.
+                      }
+  spec.homepage = 'https://github.com/ndea/rstreamor'
+  spec.license = 'MIT'
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
-  spec.license       = "MIT"
+  spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.bindir = 'exe'
+  spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.require_paths = ['lib']
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
-
-  spec.add_development_dependency 'bundler', "~> 1.8"
+  spec.add_development_dependency 'bundler', '~> 1.8'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.3.0'
 end
