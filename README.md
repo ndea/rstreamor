@@ -22,7 +22,7 @@ class Profile < ActiveRecord::Base
 end
 ```
 ```ruby
-class VideosController < ApplicationController
+class ImageController < ApplicationController
     include Rstreamor
     def show
         stream @resource.image_file
