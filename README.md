@@ -1,5 +1,5 @@
 # Rstreamor
-Development in progress...
+Stream your data using HTTP/1.1 range requests and partial responses.
 
 # Get Rstreamor
 ###### Directly from GitHub
