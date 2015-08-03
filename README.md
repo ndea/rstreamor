@@ -8,7 +8,7 @@ gem 'rstreamor', git: 'https://github.com/ndea/rstreamor.git', branch: 'master'
 ```
 ###### Rubygems
 ```ruby
-gem 'rstreamor', '~> 0.2.1'
+gem 'rstreamor', '~> 0.2.2'
 ```
 # Install
 ```ruby

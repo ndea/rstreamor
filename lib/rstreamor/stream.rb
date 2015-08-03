@@ -1,7 +1,7 @@
 module Rstreamor
   module Stream
     def stream(file)
-      request_builder = Rstreamor::Request.new(request, file)
+      request_builder = Rstreamor::Request.new(request, Rstreamor::File.new(file))
       response_builder = Rstreamor::Response.new(request_builder)
       set_response_header(request_builder, response_builder)
       stream_file(request_builder, response_builder)
