@@ -34,6 +34,8 @@ If you dont use Carrierwave as a file make sure your file method has the followi
 - #data
 - #content_type
 
+Please note that if you don't specify any range request headers Rstreamor will return the whole file from byte 0 to EOF with status code *200*
+
 # What is a range request?
 Byte serving is the process of sending only a portion of an HTTP/1.1 message from a server to a client. Byte serving begins when an HTTP server advertises its willingness to serve partial requests using the Accept-Ranges response header. A client then requests a specific part of a file from the server using the Range request header. If the range is valid, the server sends it to the client with a 206 Partial Content status code and a Content-Range header listing the range sent. Clients which request byte-serving might do so in cases in which a large file has been only partially delivered and a limited portion of the file is needed in a particular range. Byte Serving is therefore a method of bandwidth optimization. [Wikipedia](https://en.wikipedia.org/wiki/Byte_serving)
 
@@ -84,3 +86,12 @@ Content-Type:application/mp4
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+# Contribution topics wanted
+
+- Specs
+- Documentation
+- Bugfixes
+- Codestyle
+- Anything that improves this gem
+
