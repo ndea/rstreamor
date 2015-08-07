@@ -28,7 +28,11 @@ module Rstreamor
     end
 
     def slice_file
-      self.file.data.byteslice(lower_bound, upper_bound)
+      if self.request.headers['HTTP_RANGE'].present?
+        self.file.data.byteslice(lower_bound, upper_bound)
+      else
+        self.file.data
+      end
     end
 
     def file_size
