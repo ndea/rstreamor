@@ -1,26 +1,29 @@
 module Rstreamor
   class File
-    attr_accessor :file
+    attr_reader :file
 
     def initialize(file)
-      self.file = file
+      @file = file
     end
 
     def data
-      if self.file.respond_to? :data
-        self.file.data
+      @data ||= if file.respond_to? :data
+        file.data
       else
-        self.file.read
+        file.read
       end
     end
 
     def content_type
-      self.file.content_type
+      file.content_type
     end
 
     def size
-      data.size
+      # Because of encoding, the string size might not match the stream size,
+      # and that may lead to files being truncated when served (i.e. this happens
+      # often for MP3 files, were the last few seconds of files longer than a minute
+      # gets trimmed).
+      @size ||= data.bytesize
     end
-
   end
 end
