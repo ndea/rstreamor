@@ -19,7 +19,7 @@ module Rstreamor
     end
 
     def content_range
-      "bytes #{ request.lower_bound }-#{ request.upper_bound - 1 }/#{ request.file_size }"
+      "bytes #{request.lower_bound}-#{request.upper_bound}/#{request.file_size}"
     end
 
     def accept_ranges
