@@ -12,14 +12,14 @@ module Rstreamor
 
     def content_length
       if request.range_header?
-        (request.upper_bound - request.lower_bound).to_s
+        (request.upper_bound - request.lower_bound + 1).to_s
       else
         request.file_size
       end
     end
 
     def content_range
-      "bytes #{ request.lower_bound }-#{ request.upper_bound - 1 }/#{ request.file_size }"
+      "bytes #{request.lower_bound}-#{request.upper_bound}/#{request.file_size}"
     end
 
     def accept_ranges

@@ -12,7 +12,7 @@ module Rstreamor
     end
 
     def upper_bound
-      ranges[1] ? ranges[1].to_i : file.size
+      ranges[1] ? ranges[1].to_i : (file.size - 1)
     end
 
     def lower_bound
@@ -29,7 +29,7 @@ module Rstreamor
 
     def slice_file
       if request.headers['HTTP_RANGE'].present?
-        file.data.byteslice(lower_bound, upper_bound)
+        file.data.byteslice(lower_bound..upper_bound)
       else
         file.data
       end
