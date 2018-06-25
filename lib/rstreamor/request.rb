@@ -12,7 +12,7 @@ module Rstreamor
     end
 
     def upper_bound
-      ranges[1] ? ranges[1].to_i : file.size
+      ranges[1] ? ranges[1].to_i : (file.size - 1)
     end
 
     def lower_bound
