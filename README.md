@@ -34,6 +34,16 @@ If you dont use Carrierwave as a file make sure your file method has the followi
 - #data
 - #content_type
 
+Optionally, you could send some params to the `stream` method like the following example:
+```ruby
+class VideosController < ApplicationController
+  include Rstreamor
+  def show
+    stream @resource.image_file, { x_sendfile: true, stream: true }
+  end
+end
+```
+
 Please note that if you don't specify any range request headers Rstreamor will return the whole file from byte 0 to EOF with status code *200*
 
 # What is a range request?
@@ -94,4 +104,3 @@ Content-Type:application/mp4
 - Bugfixes
 - Codestyle
 - Anything that improves this gem
-
