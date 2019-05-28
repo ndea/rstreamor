@@ -1,17 +1,22 @@
 module Rstreamor
   module Stream
-    def stream(file)
+    def stream(file, options = {})
       request_builder = Rstreamor::Request.new(request, Rstreamor::File.new(file))
       response_builder = Rstreamor::Response.new(request_builder)
       set_response_header(request_builder, response_builder)
-      stream_file(request_builder, response_builder)
+      stream_file(request_builder, response_builder, options)
     end
 
     private
 
-    def stream_file(request_builder, response_builder)
+    def stream_file(request_builder, response_builder, options)
       content = request_builder.slice_file
-      send_data content, type: request_builder.file_content_type, disposition: 'inline', status: response_builder.response_code
+
+      send_data(content, {
+        type: request_builder.file_content_type,
+        disposition: 'inline',
+        status: response_builder.response_code
+      }.merge(options))
     end
 
     def set_response_header(request_builder, response_builder)
